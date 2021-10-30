@@ -15,7 +15,7 @@ Dokumen ini ditulis oleh
 
 - Setelah membuat topologi seperti di atas maka langkah selanjutnya adalah :
 
-a. Menambahkan kkonfigurasi di bawah ini untuk router Foosha :
+a. Menambahkan konfigurasi di bawah ini untuk router Foosha :
 
 `iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.30.0.0/16`
 
