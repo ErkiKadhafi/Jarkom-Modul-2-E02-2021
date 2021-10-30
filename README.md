@@ -10,10 +10,10 @@ Dokumen ini ditulis oleh
 
 ### 1. EniesLobby akan dijadikan sebagai DNS Master, Water7 akan dijadikan DNS Slave, dan Skypie akan digunakan sebagai Web Server. Terdapat 2 Client yaitu Loguetown, dan Alabasta. Semua node terhubung pada router Foosha, sehingga dapat mengakses internet :
 
--Untuk langkah awal buat topologi seperti di bawah ini:
+- Untuk langkah awal buat topologi seperti di bawah ini:
 ![1 topologi](https://user-images.githubusercontent.com/70801807/139529070-140c8cdc-e8e5-4414-9c92-962ea8f725b0.PNG)
 
--Setelah membuat topologi seperti di atas maka langkah selanjutnya adalah :
+- Setelah membuat topologi seperti di atas maka langkah selanjutnya adalah :
 
 a. Menambahkan kkonfigurasi di bawah ini untuk router Foosha :
 
@@ -41,21 +41,21 @@ Setelah semua node berhasil melakukan ping google.com maka topologi sudah dapat 
 
 
 ### 2. Buat website utama dengan mengakses franky.e02.com dengan alias www.franky.e02.com pada folder kaizoku
--Dikarenakan EnniesLoby akan menjadi DNS Master maka akan dilakukan instalasi bind9 dengan command di bawah ini :
+- Dikarenakan EnniesLoby akan menjadi DNS Master maka akan dilakukan instalasi bind9 dengan command di bawah ini :
 
 `apt-get update`
 
 `apt-get bind9 -y`
 
--Selanjutnya, akan dilakukan konfigurasi pada /etc/bind/named.conf.local sebagai berikut :
+- Selanjutnya, akan dilakukan konfigurasi pada /etc/bind/named.conf.local sebagai berikut :
 
 ![image](https://user-images.githubusercontent.com/70801807/139529658-67fc2afb-e31f-46be-b26b-692a0fd3f9b3.png)
 
--Selanjutnya buat folder kaizoku dengan command sebagai berikut :
+- Selanjutnya buat folder kaizoku dengan command sebagai berikut :
 
 `mkdir /etc/bind/kaizoku`
 
--Selanjutnya copykan file db.local pada path /etc/bind ke dalam folder kaizoku yang baru saja dibuat dan ubah namanya menjadi e02.com
+- Selanjutnya copykan file db.local pada path /etc/bind ke dalam folder kaizoku yang baru saja dibuat dan ubah namanya menjadi e02.com
 
 `cp /etc/bind/db.local /etc/bind/kaizoku/e02.com`
 
@@ -63,15 +63,15 @@ Setelah semua node berhasil melakukan ping google.com maka topologi sudah dapat 
 
 ![image](https://user-images.githubusercontent.com/70801807/139529836-50d82bc1-0263-45b7-b928-d06eaf207c25.png)
 
--Selanjutnya lakukan restart bind9 EnniesLobby dengan command sebagai berikut :
+- Selanjutnya lakukan restart bind9 EnniesLobby dengan command sebagai berikut :
 
 `service bind9 restart`
 
--Selanjutnya edit file /etc/resolv.conf pada client Loguetown dan Alabasta dengan menuliskan IP EnniesLobby sebagai berikut:
+- Selanjutnya edit file /etc/resolv.conf pada client Loguetown dan Alabasta dengan menuliskan IP EnniesLobby sebagai berikut:
 
 ![image](https://user-images.githubusercontent.com/70801807/139529963-5f98c45e-2c26-43db-a9d3-80652ca4789e.png)
 
--Selanjutnya lakukan ping ke domain franky.e02.com pada salah satu client yaitu Loguetown atau Alabasta dengan command sebagai berikut :
+- Selanjutnya lakukan ping ke domain franky.e02.com pada salah satu client yaitu Loguetown atau Alabasta dengan command sebagai berikut :
 
 `ping franky.e02.com`
 
@@ -81,15 +81,15 @@ Jika berhasil maka IP EnniesLobby lah yang akan muncul.
 
 
 ### 3. Buat subdomain super.franky.e02.com dengan alias www.super.franky.e02.com yang diatur DNS nya di EniesLobby dan mengarah ke Skypie
--Tambahkan 2 line di bawah ini ke dalam /etc/bind/kaizoku/e02.com pada EnniesLobby :
+- Tambahkan 2 line di bawah ini ke dalam /etc/bind/kaizoku/e02.com pada EnniesLobby :
 
 ![image](https://user-images.githubusercontent.com/70801807/139530147-d42d8ee3-8a2a-46c0-95bc-46b5250e60da.png)
 
--Setelahnya restart bind9 dengan :
+- Setelahnya restart bind9 dengan :
 
 `service bind9 restart`
 
--Lakukan tes dengan ping super.franky.e02.com atau wwww.super.franky.e02.com :
+- Lakukan tes dengan ping super.franky.e02.com atau wwww.super.franky.e02.com :
 
 ![image](https://user-images.githubusercontent.com/70801807/139530230-093d9cba-cb49-4996-a667-10b37eb7f9d4.png)
 
@@ -115,7 +115,7 @@ Jika berhasil maka IP yang muncul adalah IP Skypie
 
 `service bind9 restart`
 
--Untuk mengecek apakah konfigurasi sudah benar atau belum, lakukan perintah berikut pada client Loguetown
+- Untuk mengecek apakah konfigurasi sudah benar atau belum, lakukan perintah berikut pada client Loguetown
 
 ```
 // Install package dnsutils
@@ -157,7 +157,7 @@ zone "e02.com" {
 
 #### II. Konfigurasi pada Server Water7
 
--Buka Water7 dan update package lists dengan menjalankan command:
+- Buka Water7 dan update package lists dengan menjalankan command:
 
 `apt-get update`
 
