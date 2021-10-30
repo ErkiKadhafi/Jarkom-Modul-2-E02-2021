@@ -41,9 +41,30 @@ Selain username yang terekspos, password `aku.pengen.pw.aja` juga terekspos. Hal
 
 ### 12. Mengganti error default dari apache menjadi error file 404.html pada folder/error.
 
-### 13. Konfigurasi virtual host agar dapat mengakses file asset www.super.franky.c08.com/public/js menjadi www.super.franky.c08.com/js.
+### 13. Konfigurasi virtual host agar dapat mengakses file asset www.super.franky.e02.com/public/js dari www.super.franky.e02.com/js.
 
-### 14. Mengatur web www.general.mecha.franky.c08.com hanya bisa diakses dengan port 15000 dan port 15500
+Konfigurasi web `super.franky.e02.com` berada di directory `/etc/apache2/sites-available/super.franky.e02.com.conf`. Untuk menyelesaikan soal ini, tim E02 menambahkan satu baris kode yaitu sebagai berikut.
+
+```bash
+Alias "/js" "/var/www/super.franky.e02.com/public/js"
+```
+
+![image](https://user-images.githubusercontent.com/8071604/139531169-f136de96-df4e-4eaa-a9ee-a8ca796d382e.png)
+
+Penjelasan:
+
+Alias [URL-path] file-path|directory-path
+
+Sumber dokumentasi: https://httpd.apache.org/docs/2.4/mod/mod_alias.html
+
+Berdasarkan dokumentasi dari apache2, statement Alias dapat digunakan untuk URL redirection. Jika parameter URL-path diisi dengan "/public/js" dan directory-path diisi dengan "/var/www/super.franky.e02.com/public/js", maka ketika seorang client mengakses http://super.franky.e02.com/js, dia akan melihat isi dari folder public/js yaitu di http://super.franky.e02.com/public/js.
+
+
+### 14. Atur web www.general.mecha.franky.e02.com sehingga hanya bisa diakses melalui port 15000 dan port 15500
+
+Secara default, port web adalah 80. Konfigurasi web `general.mecha.franky.e02.com` berada di `/etc/apache2/
+
+
 
 ### 15. Memberi autentikasi pada www.general.mecha.franky.c08.com dengan username luffy dan password onepiece
 
