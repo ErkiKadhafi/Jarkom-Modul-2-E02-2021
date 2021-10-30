@@ -240,11 +240,11 @@ zone "e02.com" {
 
 - Kemudian buat direktori dengan nama sunnygo
 
-`mkdir /etc/bind/sunnygo`
+`mkdir /etc/var/lib/sunnygo`
 
 - Copy db.local ke direktori sunnygo dan edit namanya menjadi mecha.franky.e02.com
 
-`cp /etc/bind/db.local /etc/bind/sunnygo/mecha.franky.e02.com`
+`cp /etc/bind/db.local /etc/var/lib/sunnygo/mecha.franky.e02.com`
 
 - Kemudian edit file mecha.franky.e02.com menjadi seperti dibawah ini
 
@@ -264,7 +264,7 @@ Jika berhasil maka IP Skypie akan terlihat.
 
 ### 7. Buatkan subdomain melalui Water7 dengan nama general.mecha.franky.e02.com dengan alias www.general.mecha.franky.e02.com yang mengarah ke Skypie
 
-Untuk membuat sub domain tersebut, pertama buka folder sunnygo yang terdapat pada Water7, lalu tambahkan 2 baris berikut
+Untuk membuat subdomain tersebut, pertama buka folder sunnygo yang terdapat pada Water7, lalu tambahkan 2 baris berikut
 
 ```
 general         IN      A       10.30.2.4 ;IP SKYPIE
@@ -311,7 +311,7 @@ lalu lynx ke linx `franky.e02.com/index.php/home` yang akan menghasilkan seperti
 
 ### 10. Konfigurasi subdomain www.super.franky.e02.com Setelah itu, pada subdomain www.super.franky.e02.com, Luffy membutuhkan penyimpanan aset yang memiliki DocumentRoot pada /var/www/super.franky.e02.com.
 
-buka folder `apache2/sites-available/` dan copy file `000-default.conf'` menjadi `super.franky.e02.com.conf`. Setelah itu tambahkan syntax di bawah ini dan restart apache2.
+buka folder `apache2/sites-available/` dan copy file `000-default.conf` menjadi `super.franky.e02.com.conf`. Setelah itu tambahkan syntax di bawah ini dan restart apache2.
 
 ```
 ServerName super.franky.e02.com
