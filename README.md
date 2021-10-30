@@ -244,7 +244,7 @@ zone "e02.com" {
 
 - Copy db.local ke direktori sunnygo dan edit namanya menjadi mecha.franky.e02.com
 
-`cp /etc/bind/db.local /etc/bind/delegasi/mecha.franky.e02.com`
+`cp /etc/bind/db.local /etc/bind/sunnygo/mecha.franky.e02.com`
 
 - Kemudian edit file mecha.franky.e02.com menjadi seperti dibawah ini
 
