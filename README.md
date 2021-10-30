@@ -264,7 +264,7 @@ Jika berhasil maka IP Skypie akan terlihat.
 
 ### 7. Buatkan subdomain melalui Water7 dengan nama general.mecha.franky.e02.com dengan alias www.general.mecha.franky.e02.com yang mengarah ke Skypie
 
-Untuk membuat sub domain tersebut, pertama buka folder sunny go yang terdapat pada Water7, lalu tambahkan 2 baris berikut
+Untuk membuat sub domain tersebut, pertama buka folder sunnygo yang terdapat pada Water7, lalu tambahkan 2 baris berikut
 
 ```
 general         IN      A       10.30.2.4 ;IP SKYPIE
