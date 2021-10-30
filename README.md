@@ -25,7 +25,7 @@ b. Tambahkan konfigurasi di bawah ini pada node selain foosha :
 
 `echo nameserver 192.168.122.1 > /etc/resolv.conf`
 
-c. Lakuka ping google.com pada semua node untuk mengecek apakah node telah terhubung ke internet: 
+c. Lakukan ping google.com pada semua node untuk mengecek apakah node telah terhubung ke internet: 
 
 ![pingGoogleEnies](https://user-images.githubusercontent.com/70801807/139529282-0544678b-098f-48ce-b7c0-495d1a385598.PNG)
 
