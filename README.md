@@ -80,7 +80,7 @@ Setelah semua node berhasil melakukan ping google.com maka topologi sudah dapat 
 Jika berhasil maka IP EnniesLobby lah yang akan muncul.
 
 
-### 3. Buat subdomain super.franky.c08.com dengan alias www.super.franky.e02.com yang diatur DNS nya di EniesLobby dan mengarah ke Skypie
+### 3. Buat subdomain super.franky.e02.com dengan alias www.super.franky.e02.com yang diatur DNS nya di EniesLobby dan mengarah ke Skypie
 -Tambahkan 2 line di bawah ini ke dalam /etc/bind/kaizoku/e02.com pada EnniesLobby :
 
 ![image](https://user-images.githubusercontent.com/70801807/139530147-d42d8ee3-8a2a-46c0-95bc-46b5250e60da.png)
@@ -135,7 +135,7 @@ host -t PTR 10.30.2.2
 
 
 ### 5. Buat Water7 sebagai DNS Slave untuk domain utama
-## I. Konfigurasi pada Server EnniesLobby
+#### I. Konfigurasi pada Server EnniesLobby
 
 - Edit file /etc/bind/named.conf.local dan sesuaikan dengan syntax berikut :
 
@@ -155,7 +155,7 @@ zone "e02.com" {
 
 `service bind9 restart`
 
-## II. Konfigurasi pada Server Water7
+#### II. Konfigurasi pada Server Water7
 
 -Buka Water7 dan update package lists dengan menjalankan command:
 
@@ -181,7 +181,7 @@ zone "e02.com" {
 
 `service bind9 restart`
 
-## III. Testing
+#### III. Testing
 
 - Pada server EniesLobby silahkan matikan service bind9
 
@@ -198,9 +198,9 @@ zone "e02.com" {
 ![image](https://user-images.githubusercontent.com/70801807/139531375-cd8906df-10bb-4180-864d-f0858bc29f90.png)
 
 
-### 6. Setelah itu terdapat subdomain mecha.franky.c08.com dengan alias www.mecha.franky.e02.com yang didelegasikan dari EniesLobby ke Water7 dengan IP menuju ke Skypie dalam folder sunnygo
+### 6. Setelah itu terdapat subdomain mecha.franky.e02.com dengan alias www.mecha.franky.e02.com yang didelegasikan dari EniesLobby ke Water7 dengan IP menuju ke Skypie dalam folder sunnygo
 
-## I. Konfigurasi Pada Server EniesLobby
+#### I. Konfigurasi Pada Server EniesLobby
 
 - Pada EniesLobby, edit file /etc/bind/kaizoku/e02.com dan ubah menjadi seperti di bawah ini sesuai dengan pembagian IP EniesLobby kelompok masing-masing.
 
@@ -222,7 +222,7 @@ zone "e02.com" {
 
 `servce bind9 restart`
 
-## II. Konfigurasi pada Water7
+#### II. Konfigurasi pada Water7
 
 -  Kemudian edit file /etc/bind/named.conf.options pada Water7.
 
@@ -254,7 +254,7 @@ zone "e02.com" {
 
 `service bind9 restart`
 
-## III. Testing
+#### III. Testing
 
 - Lakukan ping ke domain mecha.franky.e02.com dari client Loguetown
 
@@ -262,7 +262,7 @@ zone "e02.com" {
 
 Jika berhasil maka IP Skypie akan terlihat.
 
-### 7. Buatkan subdomain melalui Water7 dengan nama general.mecha.franky.c08.com dengan alias www.general.mecha.franky.c08.com yang mengarah ke Skypie
+### 7. Buatkan subdomain melalui Water7 dengan nama general.mecha.franky.e02.com dengan alias www.general.mecha.franky.e02.com yang mengarah ke Skypie
 
 Untuk membuat sub domain tersebut, pertama buka folder sunny go yang terdapat pada Water7, lalu tambahkan 2 baris berikut
 
@@ -275,7 +275,7 @@ Setelah itu lakukan, restart service bind9 dan ping dari alabasta dengan address
 
 ![image](./images/no7.png)
 
-### 8. Konfigurasi Webserver dengan domain www.franky.c08.com dan DocumentRoot pada /var/www/franky.c08.com.
+### 8. Konfigurasi Webserver dengan domain www.franky.e02.com dan DocumentRoot pada /var/www/franky.e02.com.
 
 Install apache2 pada dengan syntax
 
@@ -297,7 +297,7 @@ lakukan clone dari github yang ada di soal [Link github](https://github.com/Fein
 
 ![image](./images/no8.png)
 
-### 9. Mengubah url www.franky.c08.com/index.php/home dapat menjadi menjadi www.franky.c08.com/home
+### 9. Mengubah url www.franky.e02.com/index.php/home dapat menjadi menjadi www.franky.e02.com/home
 
 Buka file `franky.e02.com.conf` pada folder `apache2/sites-available/` di node skypie, lalu tambahkan alias dengan syntax
 
@@ -309,7 +309,7 @@ lalu lynx ke linx `franky.e02.com/index.php/home` yang akan menghasilkan seperti
 
 ![image](./images/no9.png)
 
-### 10. Konfigurasi subdomain www.super.franky.c08.com Setelah itu, pada subdomain www.super.franky.c08.com, Luffy membutuhkan penyimpanan aset yang memiliki DocumentRoot pada /var/www/super.franky.c08.com.
+### 10. Konfigurasi subdomain www.super.franky.e02.com Setelah itu, pada subdomain www.super.franky.e02.com, Luffy membutuhkan penyimpanan aset yang memiliki DocumentRoot pada /var/www/super.franky.e02.com.
 
 buka folder `apache2/sites-available/` dan copy file `000-default.conf'` menjadi `super.franky.e02.com.conf`. Setelah itu tambahkan syntax di bawah ini dan restart apache2.
 
