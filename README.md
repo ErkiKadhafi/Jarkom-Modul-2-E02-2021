@@ -97,7 +97,7 @@ Catatan: Halaman web ini memang mempunyai authentication karena merupakan jawaba
 ![image](https://user-images.githubusercontent.com/8071604/139531566-74b6c384-1d52-4be0-93e3-49f6f6b34f90.png)
 
 
-### 15. Memberi autentikasi pada www.general.mecha.franky.c08.com dengan username luffy dan password onepiece
+### 15. Memberi autentikasi pada www.general.mecha.franky.e02.com dengan username luffy dan password onepiece
 
 Untuk memberi authentication pada web ini, tim E02 perlu membuat suatu file `/etc/apache2/.htpasswd-general-mecha-franky`. File ini dibuat dengan melakukan run command `htpasswd -c /etc/apache2/.htpasswd-general-mecha-franky luffy`. Setelah command tersebut di-run, maka terbentuklah sebuah file yang berisi username:luffy dan password:onepiece yang telah di-hash.
 
