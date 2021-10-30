@@ -284,7 +284,7 @@ apt-get install apache2
 service apache2 start
 ```
 
-lalu buka folder `apache2/sites-available/` dan copy file `000-default.conf'` menjadi `franky.e02.com.conf`. Setelah itu tambahkan syntax di bawah ini dan restart apache2.
+lalu buka folder `apache2/sites-available/` dan copy file `000-default.conf` menjadi `franky.e02.com.conf`. Setelah itu tambahkan syntax di bawah ini dan restart apache2.
 
 ```
 ServerName franky.e02.com
