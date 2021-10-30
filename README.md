@@ -21,7 +21,7 @@ a. Menambahkan konfigurasi di bawah ini untuk router Foosha :
 
 `cat /etc/resolv.conf`
 
-b. Tambahkan konfiggurasi di bawah ini pada node selain foosha :
+b. Tambahkan konfigurasi di bawah ini pada node selain foosha :
 
 `echo nameserver 192.168.122.1 > /etc/resolv.conf`
 
@@ -41,7 +41,7 @@ Setelah semua node berhasil melakukan ping google.com maka topologi sudah dapat 
 
 
 ### 2. Buat website utama dengan mengakses franky.e02.com dengan alias www.franky.e02.com pada folder kaizoku
-- Dikarenakan EnniesLoby akan menjadi DNS Master maka akan dilakukan instalasi bind9 dengan command di bawah ini :
+- Dikarenakan EniesLobby akan menjadi DNS Master maka akan dilakukan instalasi bind9 dengan command di bawah ini :
 
 `apt-get update`
 
@@ -63,11 +63,11 @@ Setelah semua node berhasil melakukan ping google.com maka topologi sudah dapat 
 
 ![image](https://user-images.githubusercontent.com/70801807/139529836-50d82bc1-0263-45b7-b928-d06eaf207c25.png)
 
-- Selanjutnya lakukan restart bind9 EnniesLobby dengan command sebagai berikut :
+- Selanjutnya lakukan restart bind9 EniesLobby dengan command sebagai berikut :
 
 `service bind9 restart`
 
-- Selanjutnya edit file /etc/resolv.conf pada client Loguetown dan Alabasta dengan menuliskan IP EnniesLobby sebagai berikut:
+- Selanjutnya edit file /etc/resolv.conf pada client Loguetown dan Alabasta dengan menuliskan IP EniesLobby sebagai berikut:
 
 ![image](https://user-images.githubusercontent.com/70801807/139529963-5f98c45e-2c26-43db-a9d3-80652ca4789e.png)
 
@@ -77,13 +77,13 @@ Setelah semua node berhasil melakukan ping google.com maka topologi sudah dapat 
 
 ![image](https://user-images.githubusercontent.com/70801807/139530052-48b9e611-ad02-4b46-9c68-3b1bf6a1a46b.png)
 
-Jika berhasil maka IP EnniesLobby lah yang akan muncul.
+Jika berhasil maka IP EniesLobby lah yang akan muncul.
 
 
 ### 3. Buat subdomain super.franky.e02.com dengan alias www.super.franky.e02.com yang diatur DNS nya di EniesLobby dan mengarah ke Skypie
-- Tambahkan 2 line di bawah ini ke dalam /etc/bind/kaizoku/e02.com pada EnniesLobby :
+- Tambahkan 2 line di bawah ini ke dalam /etc/bind/kaizoku/e02.com pada EniesLobby :
 
-![image](https://user-images.githubusercontent.com/70801807/139530147-d42d8ee3-8a2a-46c0-95bc-46b5250e60da.png)
+![image](https://user-images.githubusercontent.com/70801807/139533147-50aa36f9-e20a-4db9-9d0f-c267c831868f.png)
 
 - Setelahnya restart bind9 dengan :
 
@@ -135,7 +135,7 @@ host -t PTR 10.30.2.2
 
 
 ### 5. Buat Water7 sebagai DNS Slave untuk domain utama
-#### I. Konfigurasi pada Server EnniesLobby
+#### I. Konfigurasi pada Server EniesLobby
 
 - Edit file /etc/bind/named.conf.local dan sesuaikan dengan syntax berikut :
 
