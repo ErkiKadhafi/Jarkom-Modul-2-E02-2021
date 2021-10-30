@@ -19,27 +19,96 @@ Dokumen ini ditulis oleh
 
 ### 6. Setelah itu terdapat subdomain mecha.franky.c08.com dengan alias www.mecha.franky.c08.com yang didelegasikan dari EniesLobby ke Water7 dengan IP menuju ke Skypie dalam folder sunnygo
 
-FTP (File Transfer Protocol) adalah sebuah protokol yang digunakan untuk transfer file antara server dan client.
-Secara _default_, port yang digunakan oleh server FTP adalah 21. Dengan demikian, tim E02 menggunakan filter `ftp && tcp.port == 21` untuk mencari paket yang dikirimkan melalui FTP.
-
-![image](https://user-images.githubusercontent.com/8071604/134525121-2c3b615b-a7c8-4700-a03d-9e310f87c1a3.png)
-
-Pada gambar di atas, client mengirimkan perintah `USER secretuser`. `secretuser` adalah username yang digunakan oleh komputer client sebagai _credentials_ untuk mengakses FTP server.
-
-Selain username yang terekspos, password `aku.pengen.pw.aja` juga terekspos. Hal ini dikarenakan paket yang dikirim menuju ke FTP server tidak dienkripsi sehingga _packet sniffing_ dengan mudah terjadi. 
-
-![image](https://user-images.githubusercontent.com/8071604/134525894-dfc232bb-f2a1-46e4-8521-27a2a5a7bbea.png)
-
-
 ### 7. Buatkan subdomain melalui Water7 dengan nama general.mecha.franky.c08.com dengan alias www.general.mecha.franky.c08.com yang mengarah ke Skypie
+
+Untuk membuat sub domain tersebut, pertama buka folder sunny go yang terdapat pada Water7, lalu tambahkan 2 baris berikut
+
+```
+general         IN      A       10.30.2.4 ;IP SKYPIE
+www.general     IN      CNAME   general.mecha.franky.e02.com.
+```
+Setelah itu lakukan, restart service bind9 dan ping dari alabasta dengan address general.mecha.franky.e02.com. dan www.general.mecha.franky.e02.com 
+
+![image](./images/no7.png)
+
+### 8. Konfigurasi Webserver dengan domain www.franky.c08.com dan DocumentRoot pada /var/www/franky.c08.com.
+
+Install apache2 pada dengan syntax
+
+```
+apt-get install apache2
+service apache2 start
+```
+
+lalu buka folder `apache2/sites-available/` dan copy file `000-default.conf'` menjadi `franky.e02.com.conf`. Setelah itu tambahkan syntax di bawah ini dan restart apache2.
+
+```
+ServerName franky.e02.com
+ServerAlias www.franky.e02.com
+
+DocumentRoot /var/www/franky.e02.com
+```
+
+lakukan clone dari github yang ada di soal [Link github](https://github.com/FeinardSlim/Praktikum-Modul-2-Jarkom). Setelah itu lakukan unzip dan taruh file yang terdapat pada file franky ke folder `franky.e02.com`. Setelah itu lakukan akses menggunakan lynx dari client yang akan menghasilkan seperti di bawah ini
+
+![image](./images/no8.png)
 
 ### 9. Mengubah url www.franky.c08.com/index.php/home dapat menjadi menjadi www.franky.c08.com/home
 
+Buka file `franky.e02.com.conf` pada folder `apache2/sites-available/` di node skypie, lalu tambahkan alias dengan syntax
+
+```
+Alias "/home" "/var/www/franky.e02.com/index.php/home"
+```
+
+lalu lynx ke linx `franky.e02.com/index.php/home` yang akan menghasilkan seperti dibawah ini
+
+![image](./images/no9.png)
+
 ### 10. Konfigurasi subdomain www.super.franky.c08.com Setelah itu, pada subdomain www.super.franky.c08.com, Luffy membutuhkan penyimpanan aset yang memiliki DocumentRoot pada /var/www/super.franky.c08.com.
+
+buka folder `apache2/sites-available/` dan copy file `000-default.conf'` menjadi `super.franky.e02.com.conf`. Setelah itu tambahkan syntax di bawah ini dan restart apache2.
+
+```
+ServerName super.franky.e02.com
+ServerAlias www.super.franky.e02.com
+
+DocumentRoot /var/www/franky.e02.com
+```
+
+restart apache2 pada skypie dan lakukan lynx ke alamat `super.franky.e02.com` dan `www.super.franky.e02.com` maka akan menghasilkan seperti ini
+
+![image](./images/no10.png)
 
 ### 11. Akan tetapi, pada folder /public hanya dapat melakukan directory listing saja.
 
+buka file `super.franky.e02.com.conf` pada folder `apache2/sites-available` dan tambahkan syntax berikut 
+
+```
+<Directory /var/www/super.franky.e02.com>
+        Options +Indexes
+        AllowOverride All
+</Directory>
+
+<Directory /var/www/super.franky.e02.com/public>
+        Options +Indexes
+</Directory>
+```
+
+lalu akses folder public dengan menggunakan lynx `www.super.franky.e02.com/public`
+
+![image](./images/no11.png)
+
 ### 12. Mengganti error default dari apache menjadi error file 404.html pada folder/error.
+
+buka file `super.franky.e02.com.conf` pada folder `apache2/sites-available` dan tambahkan syntax berikut 
+
+```
+ErrorDocument 404 /error/404.html
+```
+lalu akses url asal dengan perintah lynx dan akan menghasilkans seperti berikut
+
+![image](./images/no12.png)
 
 ### 13. Konfigurasi virtual host agar dapat mengakses file asset www.super.franky.c08.com/public/js menjadi www.super.franky.c08.com/js.
 
