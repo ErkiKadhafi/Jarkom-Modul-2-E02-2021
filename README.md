@@ -1,6 +1,6 @@
 # Jarkom-Modul-2-E02-2021
 
-Berikut ini adalah laporan resmi dari Praktikum Jaringan Komputer Modul 1 tahun 2021 di Institut Teknologi Sepuluh Nopember
+Berikut ini adalah laporan resmi dari Praktikum Jaringan Komputer Modul 2 tahun 2021 di Institut Teknologi Sepuluh Nopember
 
 Dokumen ini ditulis oleh
 
