@@ -220,7 +220,7 @@ zone "e02.com" {
 
 - Setelah itu restart bind9
 
-`servce bind9 restart`
+`service bind9 restart`
 
 #### II. Konfigurasi pada Water7
 
