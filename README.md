@@ -10,11 +10,83 @@ Dokumen ini ditulis oleh
 
 ### 1. EniesLobby akan dijadikan sebagai DNS Master, Water7 akan dijadikan DNS Slave, dan Skypie akan digunakan sebagai Web Server. Terdapat 2 Client yaitu Loguetown, dan Alabasta. Semua node terhubung pada router Foosha, sehingga dapat mengakses internet
 
-### 2. Buat website utama dengan mengakses franky.c08.com dengan alias www.franky.c08.com pada folder kaizoku
+-Untuk langkah awal buat topologi seperti di bawah ini:
+![1 topologi](https://user-images.githubusercontent.com/70801807/139529070-140c8cdc-e8e5-4414-9c92-962ea8f725b0.PNG)
 
-### 3. Buat subdomain super.franky.c08.com dengan alias www.super.franky.c08.com yang diatur DNS nya di EniesLobby dan mengarah ke Skypie
+-Setelah membuat topologi seperti di atas maka langkah selanjutnya adalah :
+a. Menambahkan kkonfigurasi di bawah ini untuk router Foosha :
+`iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.30.0.0/16`
+`cat /etc/resolv.conf`
+b. Tambahkan konfiggurasi di bawah ini pada node selain foosha :
+`echo nameserver 192.168.122.1 > /etc/resolv.conf`
+c. Lakuka ping google.com pada semua node untuk mengecek apakah node telah terhubung ke internet:
+![pingGoogleEnies](https://user-images.githubusercontent.com/70801807/139529282-0544678b-098f-48ce-b7c0-495d1a385598.PNG)
+![pingGoogleWater7](https://user-images.githubusercontent.com/70801807/139529354-d2ae3b2c-f627-43d1-aa06-4ed303b5a735.PNG)
+![pingGoogleSkypie](https://user-images.githubusercontent.com/70801807/139529401-93606279-b011-4463-b6f2-43e6b4f27221.PNG)
+![image](https://user-images.githubusercontent.com/70801807/139529428-db98f08c-6d36-492b-8af9-2caf95dd94fb.png)
+![image](https://user-images.githubusercontent.com/70801807/139529462-f8ded76e-3f4b-4767-b1fc-3faef0b034c1.png)
+
+Setelah semua node berhasil melakukan ping google.com maka topologi sudah dapat mengakses ke internet
+
+### 2. Buat website utama dengan mengakses franky.e02.com dengan alias www.franky.e02.com pada folder kaizoku
+
+-Dikarenakan EnniesLoby akan menjadi DNS Master maka akan dilakukan instalasi bind9 dengan command di bawah ini :
+`apt-get update`
+`apt-get bind9 -y`
+-Selanjutnya, akan dilakukan konfigurasi pada /etc/bind/named.conf.local sebagai berikut :
+![image](https://user-images.githubusercontent.com/70801807/139529658-67fc2afb-e31f-46be-b26b-692a0fd3f9b3.png)
+-Selanjutnya buat folder kaizoku dengan command sebagai berikut :
+`mkdir /etc/bind/kaizoku`
+-Selanjutnya copykan file db.local pada path /etc/bind ke dalam folder kaizoku yang baru saja dibuat dan ubah namanya menjadi e02.com
+`cp /etc/bind/db.local /etc/bind/kaizoku/e02.com`
+-Selanjutnya lakukan konfigurasi pada /etc/bind/kaizoku/e02.com sebagai berikut :
+![image](https://user-images.githubusercontent.com/70801807/139529836-50d82bc1-0263-45b7-b928-d06eaf207c25.png)
+-Selanjutnya lakukan restart bind9 EnniesLobby dengan command sebagai berikut :
+`service bind9 restart`
+-Selanjutnya edit file /etc/resolv.conf pada client Loguetown dan Alabasta dengan menuliskan IP EnniesLobby sebagai berikut:
+![image](https://user-images.githubusercontent.com/70801807/139529963-5f98c45e-2c26-43db-a9d3-80652ca4789e.png)
+-Selanjutnya lakukan ping ke domain franky.e02.com pada salah satu client yaitu Loguetown atau Alabasta dengan command sebagai berikut :
+`ping franky.e02.com`
+![image](https://user-images.githubusercontent.com/70801807/139530052-48b9e611-ad02-4b46-9c68-3b1bf6a1a46b.png)
+Jika berhasil maka IP EnniesLobby lah yang akan muncul.
+
+### 3. Buat subdomain super.franky.c08.com dengan alias www.super.franky.e02.com yang diatur DNS nya di EniesLobby dan mengarah ke Skypie
+
+-Tambahkan 2 line di bawah ini ke dalam /etc/bind/kaizoku/e02.com pada EnniesLobby :
+![image](https://user-images.githubusercontent.com/70801807/139530147-d42d8ee3-8a2a-46c0-95bc-46b5250e60da.png)
+-Setelahnya restart bind9 dengan :
+`service bind9 restart`
+-Lakukan tes dengan ping super.franky.e02.com atau wwww.super.franky.e02.com :
+![image](https://user-images.githubusercontent.com/70801807/139530230-093d9cba-cb49-4996-a667-10b37eb7f9d4.png)
+Jika berhasil maka IP yang muncul adalah IP Skypie
 
 ### 4. Buat juga reverse domain untuk domain utama
+
+-   Edit file /etc/bind/named.conf.local menjadi sebagai berikut :
+    `vim /etc/bind/named.conf.local`
+    ![image](https://user-images.githubusercontent.com/70801807/139530555-995a9da0-fbbd-4ec7-8f5b-0dceec639c34.png)
+-   Selanjutnya Copykan file db.local pada path /etc/bind ke dalam folder kaizoku yang sudah dibuat dan ubah namanya menjadi 2.30.10.in-addr.arpa
+-   Edit file 2.30.10.in-addr.arpa menjadi seperti gambar di bawah ini:
+    ![image](https://user-images.githubusercontent.com/70801807/139530638-0affd900-d2fb-4c7b-8c0d-544e14747d93.png)
+-   Kemudian restart bind9 dengan command :
+    `service bind9 restart`
+    -Untuk mengecek apakah konfigurasi sudah benar atau belum, lakukan perintah berikut pada client Loguetown
+
+```
+// Install package dnsutils
+// Pastikan nameserver di /etc/resolv.conf telah dikembalikan sama dengan nameserver dari Foosha
+apt-get update
+apt-get install dnsutils
+```
+
+-   Selanjutnya pada Loguetown lakukan command di bawah ini:
+
+```
+//Kembalikan nameserver agar tersambung dengan EniesLobby
+host -t PTR 10.30.2.2
+```
+
+![image](https://user-images.githubusercontent.com/70801807/139530772-e2907e26-e2a2-4d8e-9615-07ea72fdae2a.png)
 
 ### 5. Buat Water7 sebagai DNS Slave untuk domain utama
 
@@ -103,7 +175,6 @@ lalu akses folder public dengan menggunakan lynx `www.super.franky.e02.com/publi
 
 ### 12. Mengganti error default dari apache menjadi error file 404.html pada folder/error.
 
-<<<<<<< HEAD
 buka file `super.franky.e02.com.conf` pada folder `apache2/sites-available` dan tambahkan syntax berikut
 
 ```
