@@ -88,10 +88,6 @@ host -t PTR 10.30.2.2
 
 ![image](https://user-images.githubusercontent.com/70801807/139530772-e2907e26-e2a2-4d8e-9615-07ea72fdae2a.png)
 
-### 5. Buat Water7 sebagai DNS Slave untuk domain utama
-
-### 6. Setelah itu terdapat subdomain mecha.franky.c08.com dengan alias www.mecha.franky.c08.com yang didelegasikan dari EniesLobby ke Water7 dengan IP menuju ke Skypie dalam folder sunnygo
-
 ### 7. Buatkan subdomain melalui Water7 dengan nama general.mecha.franky.c08.com dengan alias www.general.mecha.franky.c08.com yang mengarah ke Skypie
 
 Untuk membuat sub domain tersebut, pertama buka folder sunny go yang terdapat pada Water7, lalu tambahkan 2 baris berikut
@@ -238,7 +234,32 @@ Catatan: Halaman web ini memang mempunyai authentication karena merupakan jawaba
 
 ![image](https://user-images.githubusercontent.com/8071604/139531566-74b6c384-1d52-4be0-93e3-49f6f6b34f90.png)
 
+<<<<<<< HEAD
+
 ### 15. Memberi autentikasi pada www.general.mecha.franky.c08.com dengan username luffy dan password onepiece
+
+=======
+
+### 15. Memberi autentikasi pada www.general.mecha.franky.e02.com dengan username luffy dan password onepiece
+
+Untuk memberi authentication pada web ini, tim E02 perlu membuat suatu file `/etc/apache2/.htpasswd-general-mecha-franky`. File ini dibuat dengan melakukan run command `htpasswd -c /etc/apache2/.htpasswd-general-mecha-franky luffy`. Setelah command tersebut di-run, maka terbentuklah sebuah file yang berisi username:luffy dan password:onepiece yang telah di-hash.
+
+![image](https://user-images.githubusercontent.com/8071604/139531831-6a2e85b6-61ed-4a9b-af95-618e269864f1.png)
+
+Setelah file ini dibentuk, modifikasi konfigurasi apache `/etc/apache2/general.mecha.franky.e02.com-port15000.conf` dan `/etc/apache2/general.mecha.franky.e02.com-port15500.conf`. Tim E02 menambahkan kode berikut ini untuk mengimplementasikan authentication pada kedua web ini.
+
+```bash
+<Directory "/var/www/genera.mecha.franky.e02">
+  AuthType Basic
+  AuthName "Restricted Content"
+  AuthUserFile /etc/apache2/.htpasswd-general-mecha-franky
+  Require valid-user
+</Directory>
+```
+
+![image](https://user-images.githubusercontent.com/8071604/139531876-36840b31-13b5-4716-8387-1c5b815cd5f4.png)
+
+> > > > > > > b1712a53599897ccc29f08bc78fa264106ce781e
 
 ### 16. Setiap kali mengakses IP Skypie akan dialihkan secara otomatis ke www.franky.c08.com
 
