@@ -234,12 +234,6 @@ Catatan: Halaman web ini memang mempunyai authentication karena merupakan jawaba
 
 ![image](https://user-images.githubusercontent.com/8071604/139531566-74b6c384-1d52-4be0-93e3-49f6f6b34f90.png)
 
-<<<<<<< HEAD
-
-### 15. Memberi autentikasi pada www.general.mecha.franky.c08.com dengan username luffy dan password onepiece
-
-=======
-
 ### 15. Memberi autentikasi pada www.general.mecha.franky.e02.com dengan username luffy dan password onepiece
 
 Untuk memberi authentication pada web ini, tim E02 perlu membuat suatu file `/etc/apache2/.htpasswd-general-mecha-franky`. File ini dibuat dengan melakukan run command `htpasswd -c /etc/apache2/.htpasswd-general-mecha-franky luffy`. Setelah command tersebut di-run, maka terbentuklah sebuah file yang berisi username:luffy dan password:onepiece yang telah di-hash.
@@ -259,8 +253,73 @@ Setelah file ini dibentuk, modifikasi konfigurasi apache `/etc/apache2/general.m
 
 ![image](https://user-images.githubusercontent.com/8071604/139531876-36840b31-13b5-4716-8387-1c5b815cd5f4.png)
 
-> > > > > > > b1712a53599897ccc29f08bc78fa264106ce781e
 
-### 16. Setiap kali mengakses IP Skypie akan dialihkan secara otomatis ke www.franky.c08.com
+### 16. Setiap kali mengakses IP Skypie akan dialihkan secara otomatis ke www.franky.e02.com
 
-### 17. Mengganti request gambar yang memiliki substring “franky” akan diarahkan menuju franky.png ketika mengakses www.super.franky.c08.com
+Strategi tim E02 untuk menyelesaikan soal ini adalah dengan membuat script PHP pada root directory `/var/www/html`. Directory ini adalah root directory dari web `http://10.30.2.4` (IP Skypie). Jika client mengakses halaman web tersebut, maka client akan mendapatkan `index.php` yang berisi kode redirection sebagai berikut.
+
+```php
+<?php
+  header("Location: http://franky.e02.com");
+?>
+```
+
+![image](https://user-images.githubusercontent.com/8071604/139532132-c44311a1-4ea6-42fe-81ae-af77254c633c.png)
+
+Lalu, tim E02 menguji coba dengan cara mengakses halaman web http://10.30.2.4 melalui client (LogueTown) dengan menggunakan aplikasi lynx.
+
+```bash
+lynx http://10.30.2.4
+```
+
+![image](https://user-images.githubusercontent.com/8071604/139532177-cdaab26b-3b31-4506-9e82-3c82ff1b5222.png)
+
+Gambar 16.1 Browser client di-redirect ke http://franky.e02.com
+
+![image](https://user-images.githubusercontent.com/8071604/139532182-d807a3cd-2c95-4edc-ba69-1322a85e793d.png)
+
+Gambar 16.2 Isi dari http://franky.e02.com/index.html
+
+
+### 17. Mengganti request gambar yang memiliki substring “franky” akan diarahkan menuju franky.png ketika mengakses www.super.franky.e02.com
+
+Strategi yang tim E02 gunakan untuk menyelesaikan soal nomor 17 ini adalah dengan menggunakan mod rewrite.
+
+Pertama-tama, tim E02 mengaktifkan modul PHP rewrite dengan menggunakan command `a2enmod rewrite`.
+
+![image](https://user-images.githubusercontent.com/8071604/139532266-15a97d41-354d-4abc-bb6a-a92d343c1ed9.png)
+
+Gambar 17.1 Tampilan CLI yang menunjukkan command `a2enmod rewrite`
+
+Kedua, tim E02 menambahkan file `.htaccess` di directory `/var/www/super.franky.e02.com` yang berisi kode untuk me-redirect semua request dengan keyword "franky" pada URL-nya ke http://super.franky.e02.com/public/images/franky.png.
+
+```bash
+RewriteEngine on
+RewriteCond %{REQUEST_URI} !\bfranky.png\b
+RewriteRule ^(.*)franky(.*)$ http://super.franky.e02.com/public/images/franky.png [R=301,L]
+```
+
+![image](https://user-images.githubusercontent.com/8071604/139532347-c3690bd0-9be6-403f-97ce-83db3870d525.png)
+
+Gambar 17.2 Isi dari `/var/www/super.franky.e02.com/.htaccess`
+
+Penjelasan setiap baris kode:
+1. `RewriteEngine on` : mengaktifkan modul rewrite
+2. `RewriteCond %{REQUEST_URI} !\bfranky.png\b`: menambahkan suatu kondisi agar jika URL yang diminta mengandung kata `franky.png`, client browser tidak perlu di-redirect ke `http://super.franky.e02.com/public/images/franky.png`
+3. `RewriteRule ^(.*)franky(.*)$ http://super.franky.e02.com/public/images/franky.png [R=301,L]` : redirect browser client jika URL-nya mengandung kata `franky`. Pada dasarnya, `^(.*)franky(.*)$` adalah notasi RegEx untuk string dengan substring `franky`.
+
+Kode baris ke-2 sangat penting untuk ditambahkan karena dapat terjadi _endless redirection_ yang artinya browser client selalu di-redirect terus-menerus tanpa henti. Hal ini mirip dengan pendekatan fungsi rekursif. Misalnya `f(url)` adalah prosedur `f` yang me-direct browser client ke `url`. Maka, dalam bahasa pseudocode, fungsi ini dapat ditulis sebagai berikut.
+
+```c
+f(url)
+  if url.contain('franky.png')
+    do_nothing();
+  else
+    f('http://super.franky.e02.com/public/images/franky.png');
+```
+
+Uji coba dilakukan oleh Tim E02 dengan menggunakan aplikasi `lynx http://super.franky.e02.com/franky/dimana/kamu`. Hasilnya adalah sebagai berikut.
+
+![image](https://user-images.githubusercontent.com/8071604/139532529-cf3e3310-ea72-4596-b0fd-8b9ee5312193.png)
+
+Gambar 17.3 Hasil Lynx `lynx http://super.franky.e02.com/franky/dimana/kamu`
